@@ -18,6 +18,10 @@ on:
     # The branches below must be a subset of the branches above
     branches: [ "main" ]
 
+env:
+  CODEQL_EXTRACTOR_JAVA_OPTION_BUILDLESS: true
+  CODEQL_EXTRACTOR_JAVA_OPTION_BUILDLESS_CLASSPATH_FROM_BUILD_FILES: true
+
 jobs:
   analyze:
     name: Analyze
@@ -78,3 +82,15 @@ jobs:
       uses: github/codeql-action/analyze@v2
       with:
         category: "/language:${{matrix.language}}"
+
+    - name: Generate Security Report
+      uses: ctcampbell/github-security-report-action@main
+      with:
+        token: ${{ secrets.SECURITY_TOKEN }}
+        outputDir: ${{ runner.workspace }}
+        template: report
+
+    - name: Upload Artifacts to Workflow
+      uses: actions/upload-artifact@v3
+      with:      
+        path: ${{ runner.workspace }}/*.pdf
