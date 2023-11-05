@@ -84,7 +84,7 @@ jobs:
         category: "/language:${{matrix.language}}"
 
     - name: Generate Security Report
-      uses: ctcampbell/github-security-report-action@main
+      uses: mcantu/github-security-report-action@main
       with:
         token: ${{ secrets.SECURITY_TOKEN }}
         outputDir: ${{ runner.workspace }}
