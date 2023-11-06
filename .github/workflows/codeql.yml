@@ -82,15 +82,3 @@ jobs:
       uses: github/codeql-action/analyze@v2
       with:
         category: "/language:${{matrix.language}}"
-
-    - name: Generate Security Report
-      uses: mcantu/github-security-report-action@main
-      with:
-        token: ${{ secrets.SECURITY_TOKEN }}
-        outputDir: ${{ runner.workspace }}
-        template: report
-
-    - name: Upload Artifacts to Workflow
-      uses: actions/upload-artifact@v3
-      with:      
-        path: ${{ runner.workspace }}/*.pdf
