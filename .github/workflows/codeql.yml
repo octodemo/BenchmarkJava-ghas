@@ -82,6 +82,13 @@ jobs:
       uses: github/codeql-action/analyze@v2
       with:
         category: "/language:${{matrix.language}}"
+        sarif-file-output: ./.github/codeql
+
+    - name: Upload SARIF file
+      uses: actions/upload-artifact@v3
+      with:
+        name: CodeQL SARIF
+        path: ./.github/codeql/*.sarif
 
     - name: CSV export
       uses: mageroni/ghas-to-csv@main
