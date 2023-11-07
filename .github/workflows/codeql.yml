@@ -84,7 +84,7 @@ jobs:
         category: "/language:${{matrix.language}}"
 
     - name: CSV export
-      uses: advanced-security/ghas-to-csv@v2
+      uses: mageroni/ghas-to-csv@main
       env:
         GITHUB_PAT: ${{ secrets.SECURITY_TOKEN }}  
     - name: Upload CSV
