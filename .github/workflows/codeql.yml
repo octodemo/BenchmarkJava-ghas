@@ -95,4 +95,4 @@ jobs:
         path: ./.github/codeql/*.sarif
     - name: Count Origins
       run: |
-        cat ./.github/codeql/java.sarif | jq '.runs[0].results | map({ruleId: .ruleId, artifactLocation: .locations[0].physicalLocation.artifactLocation.uri, originLocation: .codeFlows[0].threadFlows[0].locations[0].location.physicalLocation.artifactLocation.uri})'  | jq 'group_by(.originLocation) | map({{originLocation: .[0].originLocation, count: length}})' | jq length
+        cat ./.github/codeql/java.sarif | jq '.runs[0].results | map({ruleId: .ruleId, artifactLocation: .locations[0].physicalLocation.artifactLocation.uri, originLocation: .codeFlows[0].threadFlows[0].locations[0].location.physicalLocation.artifactLocation.uri})'  | jq 'group_by(.originLocation) | map({originLocation: .[0].originLocation, count: length})' | jq length
