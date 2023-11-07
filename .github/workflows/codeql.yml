@@ -86,7 +86,7 @@ jobs:
     - name: CSV export
       uses: mageroni/ghas-to-csv@main
       env:
-        GITHUB_PAT: ${{ secrets.SECURITY_TOKEN }}  
+        GITHUB_PAT: ${{ secrets.PAT_001 }}  
     - name: Upload CSV
       uses: actions/upload-artifact@v3
       with:
