@@ -37,6 +37,9 @@ jobs:
       contents: read
       security-events: write
 
+    env:
+      command: "{ruleId: .ruleId, artifactLocation: .locations[0].physicalLocation.artifactLocation.uri, originLocation: .codeFlows[0].threadFlows[0].locations[0].location.physicalLocation.artifactLocation.uri }"
+
     strategy:
       fail-fast: false
       matrix:
@@ -89,7 +92,9 @@ jobs:
       with:
         name: CodeQL SARIF
         path: ./.github/codeql/*.sarif
+    - name: Install jq
+      run: brew install jq
     - name: Run Filter
-      run: cat ./.github/codeql/java.sarif | jq '.runs[0].results | map({ruleId: .ruleId, artifactLocation: .locations[0].physicalLocation.artifactLocation.uri, artifactLine: .locations[0].physicalLocation.region.startLine, originLocation: .codeFlows[0].threadFlows[0].locations[0].location.physicalLocation.artifactLocation.uri , originLine: .codeFlows[0].threadFlows[0].locations[0].location.physicalLocation.region.startLine })' > ./.github/codeql/modifiedsarif.json
+      run: cat ./.github/codeql/java.sarif | jq '.runs[0].results | map(${{env.command}})' > ./.github/codeql/modifiedsarif.json
     - name: Count number of origins
       run: cat ./.github/codeql/modifiedsarif.json | jq 'group_by(.originLocation) | map({originLocation: .[0].originLocation, count: length})' > final2.json
