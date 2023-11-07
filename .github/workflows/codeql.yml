@@ -93,8 +93,6 @@ jobs:
       with:
         name: CodeQL SARIF
         path: ./.github/codeql/*.sarif
-    - name: Install jq
-      run: brew install jq
     - name: Run Filter
       run: cat ./.github/codeql/java.sarif | jq '.runs[0].results | map(${{env.command}})' > ./.github/codeql/modifiedsarif.json
     - name: Count number of origins
